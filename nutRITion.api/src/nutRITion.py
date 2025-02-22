@@ -73,6 +73,8 @@ def get_foodandallergens():
     """)
 
 def load_data(path):
+    """ Takes in a path to a csv file and then opens that file, filling a 2D array with every of the rows and attributes
+        and creating a driver or a rider with every element in the array. """
     rows = []
     with open(path, 'r') as csvfile:
         csvreader = csv.reader(csvfile)
@@ -85,6 +87,12 @@ def load_data(path):
 
 
 def new_meal(dict):
+    """
+    Takes in a dictionary of attributes to be injected into a sql statement for creating a ride entity. Also gets rid
+    of any etities in the available table that are involved with the new ride.
+    Returns the ride.
+
+    """
     nextRID = get_next_id('meals')[0]
     dict.update({'mealID': nextRID + 1})
 
@@ -94,12 +102,5 @@ def new_meal(dict):
     VALUES 
     (%(mealID)s, %(name)s, %(calories)s, %(satFat)s, %(cholesterol)s, %(sugars)s, %(fat)s, %(sodium)s, %(fiber)s, %(protein)s);
     """, dict)
-
-def delete_meal(id):
-    return exec_commit(
-        """    
-    DELETE FROM foodandallergens WHERE mealID = %(id)s;
-    DELETE FROM meals WHERE mealID = %(id)s;
-    """, {'id': id})
 
 
