@@ -3,7 +3,7 @@ import csv
 
 def scrape():
     data_format = ["allergenName", "carbohydrates", "dietaryFiber", "fat", "protein", "saturatedFat", "vitaminA", "calories", "transFattyAcid", "calcium", "cholesterol", "iron", "sodium", "vitaminC", "totalSugars"]
-    data = [["name", "location", "period"] + data_format[1:]]
+    data = [["name", "location", "period"] + data_format]
 
     locations_url = "https://locations.fdmealplanner.com/api/v1/location-data-webapi/search-locationByAccount?AccountShortName=RIT&isActive=1&IsPlannerLocation=1&pageIndex=1&pageSize=0&isWeb=1"
     locations_response = requests.get(locations_url).json()
@@ -31,7 +31,7 @@ def scrape():
                         else:
                             item_data = [item["componentName"].replace(";", "-"), location_name, period_name]
                         for info in data_format:
-                            item_data.append(item[info])
+                            item_data.append(item[info].replace(",", "/"))
                         data.append(item_data)
 
     with open('data.csv', 'w', newline='') as data_csv:
