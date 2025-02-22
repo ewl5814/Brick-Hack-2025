@@ -103,4 +103,11 @@ def new_meal(dict):
     (%(mealID)s, %(name)s, %(calories)s, %(satFat)s, %(cholesterol)s, %(sugars)s, %(fat)s, %(sodium)s, %(fiber)s, %(protein)s);
     """, dict)
 
+def delete_meal(id):
+    return exec_commit(
+        """    
+    DELETE FROM foodandallergens WHERE mealID = %(id)s;
+    DELETE FROM meals WHERE mealID = %(id)s;
+    """, {'id': id})
+
 
