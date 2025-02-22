@@ -26,7 +26,10 @@ def scrape():
             for section in menu_response["result"]:
                 if section["allMenuRecipes"] is not None:
                     for item in section["allMenuRecipes"]:
-                        item_data = [item["componentName"], location_name, period_name]
+                        if item["englishAlternateName"] is not None:
+                            item_data = [item["englishAlternateName"], location_name, period_name]
+                        else:
+                            item_data = [item["componentName"].replace(";", "-"), location_name, period_name]
                         for info in data_format:
                             item_data.append(item[info])
                         data.append(item_data)
@@ -34,3 +37,6 @@ def scrape():
     with open('data.csv', 'w', newline='') as data_csv:
         writer = csv.writer(data_csv)
         writer.writerows(data)
+
+if __name__ == "__main__":
+    scrape()
