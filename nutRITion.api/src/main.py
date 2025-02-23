@@ -11,14 +11,19 @@ OLLAMA_URL = "http://localhost:11434/api/generate"
 @app.route('/generate-meal-plan', methods=['POST'])
 def generate_meal_plan():
     data = request.json
-    prompt = data.get('prompt')
-    if not prompt:
+    user_prompt = data.get('prompt')
+
+    if not user_prompt:
         return jsonify({"error": "Prompt is required"}), 400
+
+    system_prompt = """ SYSTEM PROMPT: You are a nutritionist helping a college student create a healthy meal plan from food available on campus. 
+                        Create a 7-day meal plan for the college student. You should try to follow the user prompt closely."""
+    full_prompt = f"{system_prompt}\n\n{user_prompt}"
 
     # Prepare the payload for Ollama
     payload = {
         "model": "llama3.1:8b",
-        "prompt": prompt,
+        "prompt": full_prompt,
         "stream": False 
     }
 

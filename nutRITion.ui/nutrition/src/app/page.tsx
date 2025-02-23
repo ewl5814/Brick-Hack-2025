@@ -36,7 +36,7 @@ export default function MealPlanPage() {
   };
 
   const handleGenerate = () => {
-    const userPrompt = "Create a healthy meal plan for a vegetarian student...";
+    const userPrompt = "Create a healthy meal plan for a vegetarian student";
     generateMealPlan(userPrompt);
   };
 
@@ -55,4 +55,5 @@ export default function MealPlanPage() {
       )}
     </div>
   );
+  
 }
