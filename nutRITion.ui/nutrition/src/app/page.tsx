@@ -1,3 +1,4 @@
+'use client'
 import Nav from "./navbar";
 import CreateMealView from "./create-meal"
 import Image from "next/image";
