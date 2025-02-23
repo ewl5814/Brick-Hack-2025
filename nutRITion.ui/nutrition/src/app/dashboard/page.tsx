@@ -26,6 +26,9 @@ interface MealPlanResponse {
   meal_plan: MealPlan; // meal_plan is already an object
 }
 
+const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const mealTypes = ["Breakfast", "Lunch", "Dinner", "All-Day"];
+
 export default function MealPlanPage() {
   const [mealPlan, setMealPlan] = useState<MealPlan | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -113,7 +116,7 @@ export default function MealPlanPage() {
       return; // Stop if the form is not valid
     }
 
-    const userPrompt = `Create a healthy meal plan for a vegetarian student with the following preferences:
+    const userPrompt = `Create a healthy meal plan for a student with the following preferences:
       Locations: ${selectedLocations.join(', ')}
       Meals: ${selectedMeals.join(', ')}
       Allergens to avoid: ${selectedAllergens.join(', ')}
@@ -188,25 +191,29 @@ export default function MealPlanPage() {
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {mealPlan && (
-      <div className="meal-plan-grid">
-        {Object.entries(mealPlan).map(([day, meals]) => (
-          <div key={day} className="day-tile">
-            <h3>{day}</h3>
-            {Object.entries(meals).map(([mealType, mealDetails]) => (
-              <div key={mealType} className="meal-details">
-                <h4>{mealType}</h4>
-                <p><strong>Name:</strong> {mealDetails.name}</p>
-                <p><strong>Location:</strong> {mealDetails.location}</p>
-                <p><strong>Calories:</strong> {mealDetails.calories}</p>
-                <p><strong>Protein:</strong> {mealDetails.protein}g</p>
-                <p><strong>Fat:</strong> {mealDetails.fat}g</p>
-                <p><strong>Carbs:</strong> {mealDetails.carbs}g</p>
+        <div className="meal-plan-grid">
+          {daysOfWeek
+            .filter((day) => mealPlan[day]) // Filter out days that don't exist in the meal plan
+            .map((day) => (
+              <div key={day} className="day-tile">
+                <h3>{day}</h3>
+                {mealTypes
+                  .filter((mealType) => mealPlan[day][mealType]) // Filter out meal types that don't exist for the day
+                  .map((mealType) => (
+                    <div key={mealType} className="meal-details">
+                      <h4>{mealType}</h4>
+                      <p><strong>Name:</strong> {mealPlan[day][mealType].name}</p>
+                      <p><strong>Location:</strong> {mealPlan[day][mealType].location}</p>
+                      <p><strong>Calories:</strong> {mealPlan[day][mealType].calories}</p>
+                      <p><strong>Protein:</strong> {mealPlan[day][mealType].protein}g</p>
+                      <p><strong>Fat:</strong> {mealPlan[day][mealType].fat}g</p>
+                      <p><strong>Carbs:</strong> {mealPlan[day][mealType].carbs}g</p>
+                    </div>
+                  ))}
               </div>
             ))}
-          </div>
-        ))}
-      </div>
-    )}
+        </div>
+      )}
 
       {/* Full-screen loading overlay */}
       {isLoading && (
