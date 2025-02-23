@@ -1,5 +1,6 @@
 'use client'
 import Nav from ".././navbar";
+import Image from "next/image";
 import { useState } from 'react';
 import LocationsSelect from "./location-select";
 import MealsSelect from "./meal-select";
@@ -44,53 +45,73 @@ export default function MealPlanPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-white">
-      {/* ✅ Ensure Nav is at the top */}
-      <div className="w-full">
-        <Nav />
-      </div>
-
-      <div className="flex flex-col items-center mt-4">
-        <div className="text-center flex flex-col items-center space-y-2">
-          <LocationsSelect />
-          <MealsSelect />
-          <AllergensSelect />
+    <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
+      <div className="flex flex-col items-center">
+            <Nav />
+            <div className="text-center flex flex-col items-center m-2">
+              <LocationsSelect />
+              <MealsSelect />
+              <AllergensSelect />
+            </div>
+            <h1>Meal Plan Generator</h1>
+            <button
+                onClick={handleGenerate}
+                disabled={isLoading}
+                style={{
+                padding: '10px 20px',
+                fontSize: '16px',
+                backgroundColor: 'rgb(247, 105, 2)',
+                color: '#fff',
+                border: 'none',
+                borderRadius: '5px',
+                cursor: 'pointer',
+                }}
+            >
+                Generate Meal Plan
+            </button>
         </div>
-
-        <h1 className="text-xl font-bold mt-4">Meal Plan Generator</h1>
-
-        <button
-          onClick={handleGenerate}
-          disabled={isLoading}
-          className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition mt-2"
-        >
-          Generate Meal Plan
-        </button>
-
-        {error && <p className="text-red-500 mt-2">{error}</p>}
-        {mealPlan && (
-          <div className="mt-4 p-4 bg-gray-100 rounded-md">
-            <h2 className="font-bold">Your Meal Plan:</h2>
-            <p>{mealPlan}</p>
-          </div>
-        )}
-      </div>
-
-      {/* ✅ Full-screen loading overlay */}
-      {isLoading && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="spinner w-12 h-12"></div>
+      
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {mealPlan && (
+        <div style={{ marginTop: '20px' }}>
+          <h2>Your Meal Plan:</h2>
+          <p>{mealPlan}</p>
         </div>
       )}
 
+      {/* Full-screen loading overlay */}
+      {isLoading && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent gray overlay
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000, // Ensure it's on top of everything
+          }}
+        >
+          <div className="spinner" style={{ width: '50px', height: '50px' }}></div>
+        </div>
+      )}
+
+      {/* Add CSS for the spinner */}
       <style jsx>{`
         @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
         }
         .spinner {
           border: 4px solid #f3f3f3;
-          border-top: 4px solid #3498db;
+          border-top: 4px solid rgb(247, 105, 2);
           border-radius: 50%;
           width: 50px;
           height: 50px;
