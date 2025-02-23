@@ -5,7 +5,7 @@ RUN npm install
 COPY ./ .
 RUN npm run build
 
-FROM base AS runner
+#FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
