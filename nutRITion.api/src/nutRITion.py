@@ -97,7 +97,7 @@ def load_data(path):
     sql = """
     INSERT INTO meals(mealId, location, name, period, calories, satFat, cholesterol, sugars, fat, sodium, fiber, protein)
     VALUES 
-    ((SELECT COUNT(*) FROM meals)+1, %(location)s, %(name)s, %(period), %(calories)s, %(satFat)s, %(cholesterol)s, %(sugars)s, %(fat)s, %(sodium)s, %(fiber)s, %(protein)s);
+    ((SELECT COUNT(*) FROM meals)+1, %(location)s, %(name)s, %(period)s, %(calories)s, %(satFat)s, %(cholesterol)s, %(sugars)s, %(fat)s, %(sodium)s, %(fiber)s, %(protein)s);
     
     DO $$
     DECLARE
