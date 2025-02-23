@@ -161,12 +161,12 @@ def query(location, meal_time, allergens):
     """
     SELECT *
     FROM meals m
-    WHERE m.location IN %(location)s
-    AND m.mealTime IN %(meal_time)s
+    WHERE m.location IN ANY(%s)
+    AND m.mealTime IN ANY(%s)
     AND NOT EXISTS (
         SELECT 1 FROM foodandallergens fa
         WHERE fa.mealID = m.mealID
         AND fa.allergenName = ANY(%s)
     )
-    """, (allergens,)
+    """, (location, meal_time, allergens)
     )
