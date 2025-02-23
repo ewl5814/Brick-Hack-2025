@@ -26,4 +26,7 @@ services:
     build:
       context: ./nutRITion.ui/nutrition/
       dockerfile: ./Dockerfile
+    ports:
+      "69420:3000"
+
 
