@@ -3,7 +3,7 @@ import csv
 
 from psycopg2._psycopg import AsIs
 
-from nutRITion_db_utils import *
+from src.nutRITion_db_utils import *
 
 
 def create_tables():

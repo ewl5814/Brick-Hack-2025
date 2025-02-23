@@ -1,4 +1,9 @@
 import unittest
+import sys
+import os
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from src.nutRITion import *
 from src.nutRITion_db_utils import *
 
