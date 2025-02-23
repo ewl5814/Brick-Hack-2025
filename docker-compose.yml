@@ -18,12 +18,12 @@ services:
         - db
     build:
       context: ./nutRITion.api/
-      dockerfile: ./nutRITion.api/Dockerfile
+      dockerfile: ./Dockerfile
   ui:
     platform: linux/amd64
     depends_on:
       - api
     build:
       context: ./nutRITion.ui/nutrition/
-      dockerfile: ./nutRITion.ui/nutrition/Dockerfile
+      dockerfile: ./Dockerfile
 
