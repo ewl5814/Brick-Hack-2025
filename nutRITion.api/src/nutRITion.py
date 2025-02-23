@@ -19,7 +19,6 @@ def create_tables():
         mealID SERIAL PRIMARY KEY NOT NULL,
         name VARCHAR(50),
         location VARCHAR(50),
-        period VARCHAR(50),
         calories FLOAT,
         satFat FLOAT,
         cholesterol FLOAT,
@@ -89,7 +88,7 @@ def load_data(path):
             rows.append(next(csvreader))
             count += 1
     for row in rows:
-        mealDict = {'name': row[0], 'allergens': row[3], 'location': row[1], 'period': row[2], 'calories': row[10], 'satFat': row[8], 'cholesterol': row[13],
+        mealDict = {'name': row[0], 'location': row[1], 'allergens': row[3], 'calories': row[10], 'satFat': row[8], 'cholesterol': row[13],
                     'sugars': row[17], 'fat': row[6], 'sodium': row[15], 'fiber': row[5], 'protein': row[7]}
         count = len(mealDict.get('allergens').split('/'))
         mealDict.update({'count': count})
@@ -97,10 +96,10 @@ def load_data(path):
 
 
     sql = """
-    INSERT INTO meals(mealId, location, name, period, calories, satFat, cholesterol, sugars, fat, sodium, fiber, protein)
+    INSERT INTO meals(mealId, location, name, calories, satFat, cholesterol, sugars, fat, sodium, fiber, protein)
     VALUES 
-    ((SELECT COUNT(*) FROM meals)+1, %(location)s, %(name)s, %(period)s, %(calories)s, %(satFat)s, %(cholesterol)s, %(sugars)s, %(fat)s, %(sodium)s, %(fiber)s, %(protein)s);
-    
+    ((SELECT COUNT(*) FROM meals)+1, %(location)s, %(name)s, %(calories)s, %(satFat)s, %(cholesterol)s, %(sugars)s, %(fat)s, %(sodium)s, %(fiber)s, %(protein)s)
+    ON CONFLICT (location, name) DO NOTHING;
     DO $$
     DECLARE
         i INT := 0;
@@ -159,17 +158,4 @@ def delete_meal(id):
     DELETE FROM meals WHERE mealID = %(id)s;
     """, {'id': id})
 
-def query(location, meal_time, allergens):
-    return exec_get_all(
-    """
-    SELECT *
-    FROM meals m
-    WHERE m.location = ANY(%s)
-    AND m.mealTime = ANY(%s)
-    AND NOT EXISTS (
-        SELECT 1 FROM foodandallergens fa
-        WHERE fa.mealID = m.mealID
-        AND fa.allergenName = ANY(%s)
-    )
-    """, (location, meal_time, allergens)
-    )
+

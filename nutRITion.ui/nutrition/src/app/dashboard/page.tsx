@@ -41,7 +41,7 @@ export default function MealPlanPage() {
   const [validationError, setValidationError] = useState<string>('');
   const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
 
-  const generateMealPlan = async (userPrompt: string, locations: string[], mealTimes: string[], allergens: string[]) => {
+  const generateMealPlan = async (userPrompt: string) => {
     setIsLoading(true);
     setError('');
   
@@ -49,7 +49,7 @@ export default function MealPlanPage() {
       const response = await fetch('http://localhost:8000/generate-meal-plan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: userPrompt, locations: locations, mealTimes: mealTimes, allergens: allergens }),
+        body: JSON.stringify({ prompt: userPrompt }),
       });
   
       if (!response.ok) {
@@ -122,7 +122,7 @@ export default function MealPlanPage() {
       Allergens to avoid: ${selectedAllergens.join(', ')}
       Special Notes: ${specialNotes}`;
 
-    generateMealPlan(userPrompt, selectedLocations, selectedMeals, selectedAllergens);
+    generateMealPlan(userPrompt);
   };
 
   return (
