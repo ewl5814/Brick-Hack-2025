@@ -1,12 +1,35 @@
-FROM public.ecr.aws/docker/library/node:latest as build-stage
+FROM public.ecr.aws/docker/library/node:latest as base
+FROM base AS deps
+
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-COPY ./ .
+
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+#COPY .env.production.sample .env.production
 RUN npm run build
 
-FROM public.ecr.aws/nginx/nginx:1.22 as production-stage
-RUN mkdir /app
-COPY --from=build-stage /app/dist /app
-COPY nginx.conf /etc/nginx/nginx.conf
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV=production
 
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+
+COPY --from=builder /app/public ./public
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+FROM base as release
+
+EXPOSE 3000
+
+ENV PORT=3000
+
+CMD HOSTNAME="0.0.0.0" node server.js

@@ -11,4 +11,4 @@ RUN pip3 install -r requirements.txt
 
 COPY ./src/main.py /app
 
-CMD python3 server.py
+CMD python3 main.py
