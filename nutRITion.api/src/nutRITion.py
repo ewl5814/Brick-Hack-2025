@@ -157,4 +157,17 @@ def delete_meal(id):
     DELETE FROM meals WHERE mealID = %(id)s;
     """, {'id': id})
 
-
+def query(location, meal_time, allergens):
+    return exec_get_all(
+    """
+    SELECT *
+    FROM meals m
+    WHERE m.location = ANY(%s)
+    AND m.mealTime = ANY(%s)
+    AND NOT EXISTS (
+        SELECT 1 FROM foodandallergens fa
+        WHERE fa.mealID = m.mealID
+        AND fa.allergenName = ANY(%s)
+    )
+    """, (location, meal_time, allergens)
+    )
