@@ -2,20 +2,26 @@ FROM public.ecr.aws/docker/library/node:latest as base
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-COPY ./ .
-COPY . .
+COPY ./ ./
 RUN npm run build
 
 EXPOSE 3000
 
 USER node
 
-CMD [ "npm start" ]
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
+FROM base as release
+WORKDIR /app
+RUN npm i
+COPY --from=base /app/node_modules ./node_modules
+COPY --from=base /app/package.json ./package.json
+COPY --from=base /app/.next ./.next
+COPY --from=base /app/src ./src
+COPY --from=base /app .
 
-#FROM public.ecr.aws/nginx/nginx:1.22 as production-stage
-#RUN mkdir /app
-#COPY --from=runner /app/public ./public
-#COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 3000
 
+EXPOSE 3000
+
+ENV PORT=3000
+
+CMD node server.js
