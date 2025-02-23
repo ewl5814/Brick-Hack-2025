@@ -15,8 +15,6 @@ export default function WelcomePage() {
         fill
         style={{ objectFit: "cover" }}
       />
-
-
       {/* Centered Button Container */}
       <div className="absolute inset-0 flex items-center justify-center">
         <button
