@@ -1,6 +1,5 @@
 'use client'
 import Nav from ".././navbar";
-import Image from "next/image";
 import { useState } from 'react';
 import LocationsSelect from "./location-select";
 import MealsSelect from "./meal-select";
@@ -48,7 +47,7 @@ export default function MealPlanPage() {
     <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
       <div className="flex flex-col items-center">
             <Nav />
-            <div className="text-center flex flex-col items-center m-2">
+            <div className="text-center flex flex-col items-center m-2 gap-2">
               <LocationsSelect />
               <MealsSelect />
               <AllergensSelect />
