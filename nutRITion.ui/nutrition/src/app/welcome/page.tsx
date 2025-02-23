@@ -16,7 +16,11 @@ export default function WelcomePage() {
         style={{ objectFit: "cover" }}
       />
       {/* Centered Button Container */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        {/* Large Text */}
+        <h1 className="text-white text-8xl font-bold tracking-wide mb-10">
+          nut<span className="text-[#F76902]">RIT</span>ion
+        </h1>
         <button
           onClick={() => router.push("/dashboard")}
           className="bg-[#F76902] hover:bg-[#E08C2B] text-white font-bold py-4 px-8 text-xl rounded-xl shadow-lg transition duration-300"
