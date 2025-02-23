@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/node:latest as build-stage
+FROM public.ecr.aws/docker/library/node:latest as base
 FROM base AS deps
 WORKDIR /app
 COPY package*.json ./
