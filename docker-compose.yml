@@ -20,7 +20,7 @@ services:
       context: ./nutRITion.api/
       dockerfile: ./Dockerfile
     ports:
-      - 8080:8000
+      - 8000:8000
   ui:
     platform: linux/amd64
     depends_on:
