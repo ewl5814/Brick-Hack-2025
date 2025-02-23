@@ -1,0 +1,74 @@
+[
+  {
+    "Monday": {
+      "Breakfast": {
+        "name": "Avocado Toast",
+        "location": "Beanz",
+        "calories": 420,
+        "protein": 10,
+        "fat": 24,
+        "carbs": 45
+      }
+    },
+    "Tuesday": {
+      "Breakfast": {
+        "name": "Oatmeal with Banana",
+        "location": "Beanz",
+        "calories": 350,
+        "protein": 5,
+        "fat": 8,
+        "carbs": 60
+      }
+    },
+    "Wednesday": {
+      "Breakfast": {
+        "name": "Yogurt Parfait",
+        "location": "Beanz",
+        "calories": 300,
+        "protein": 15,
+        "fat": 10,
+        "carbs": 40
+      }
+    },
+    "Thursday": {
+      "Breakfast": {
+        "name": "Veggie Wrap",
+        "location": "Beanz",
+        "calories": 450,
+        "protein": 12,
+        "fat": 20,
+        "carbs": 50
+      }
+    },
+    "Friday": {
+      "Breakfast": {
+        "name": "Smoothie Bowl",
+        "location": "Beanz",
+        "calories": 320,
+        "protein": 10,
+        "fat": 15,
+        "carbs": 40
+      }
+    },
+    "Saturday": {
+      "Breakfast": {
+        "name": "Tofu Scramble",
+        "location": "Beanz",
+        "calories": 380,
+        "protein": 20,
+        "fat": 18,
+        "carbs": 30
+      }
+    },
+    "Sunday": {
+      "Breakfast": {
+        "name": "Quinoa Breakfast Bowl",
+        "location": "Beanz",
+        "calories": 400,
+        "protein": 15,
+        "fat": 20,
+        "carbs": 50
+      }
+    }
+  }
+]

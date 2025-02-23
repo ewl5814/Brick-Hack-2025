@@ -1,2 +1,4 @@
 **/db.yml
 .idea
+.vscode
+.env
