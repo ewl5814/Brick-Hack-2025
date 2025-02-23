@@ -5,7 +5,7 @@ COPY package*.json ./
 RUN npm install
 COPY ./ .
 
-FROM base AS builder``
+FROM base AS builder
 RUN npm run build
 
 FROM base AS runner
