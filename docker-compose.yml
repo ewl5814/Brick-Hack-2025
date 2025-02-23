@@ -19,6 +19,8 @@ services:
     build:
       context: ./nutRITion.api/
       dockerfile: ./Dockerfile
+    ports:
+      - 8080:8000
   ui:
     platform: linux/amd64
     depends_on:
@@ -27,6 +29,6 @@ services:
       context: ./nutRITion.ui/nutrition/
       dockerfile: ./Dockerfile
     ports:
-    - '8080:3000'
+    - '3000:3000'
 
 
