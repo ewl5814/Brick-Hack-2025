@@ -1,27 +1,34 @@
 FROM public.ecr.aws/docker/library/node:latest as base
+FROM base AS deps
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-COPY ./ ./
+
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+COPY .env.production.sample .env.production
 RUN npm run build
 
-EXPOSE 3000
+FROM base AS runner
+WORKDIR /app
+ENV NODE_ENV=production
 
-USER node
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+
+COPY --from=builder /app/public ./public
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
 
 FROM base as release
-WORKDIR /app
-RUN npm i
-COPY --from=base /app/node_modules ./node_modules
-COPY --from=base /app/package.json ./package.json
-COPY --from=base /app/.next ./.next
-COPY --from=base /app/src ./src
-COPY --from=base /app .
-
-EXPOSE 3000
 
 EXPOSE 3000
 
 ENV PORT=3000
 
-CMD node server.js
+CMD HOSTNAME="0.0.0.0" node server.js
