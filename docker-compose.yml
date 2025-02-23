@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres
+    restart: unless-stopped
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=DB
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+  api:
+    platform: linux/amd64
+    depends_on:
+        - db
+    build:
+      context: ./nutRITion.api/
+      dockerfile: ./nutRITion.api/Dockerfile
+  ui:
+    platform: linux/amd64
+    depends_on:
+      - api
+    build:
+      context: ./nutRITion.ui/nutrition/
+      dockerfile: ./nutRITion.ui/nutrition/Dockerfile
+
