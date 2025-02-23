@@ -1,11 +1,14 @@
 FROM public.ecr.aws/docker/library/node:latest as build-stage
+FROM base AS deps
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY ./ .
+
+FROM base AS builder``
 RUN npm run build
 
-#FROM base AS runner
+FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
