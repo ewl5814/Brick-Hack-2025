@@ -13,10 +13,10 @@ export default function LocationSelect() {
 
     if(locations == null || locations.length < 1) {
         return (
-            <div>
+            <div className="text-center">
                 <Select disabled={true} >
                     <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Theme" />
+                        <SelectValue placeholder="Locations" />
                     </SelectTrigger>
                 </Select>
             </div>
@@ -24,10 +24,10 @@ export default function LocationSelect() {
     }
 
     return (
-        <div>
+        <div className="text-center">
             <Select>
                 <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Theme" />
+                    <SelectValue placeholder="Locations" />
                 </SelectTrigger>
                 <SelectContent>
                     {
