@@ -17,7 +17,9 @@ def generate_meal_plan():
         return jsonify({"error": "Prompt is required"}), 400
 
     system_prompt = """ SYSTEM PROMPT: You are a nutritionist helping a college student create a healthy meal plan from food available on campus. 
-                        Create a 7-day meal plan for the college student. You should try to follow the user prompt closely."""
+                        Create ALL output in JSON format. Create a 7-day meal plan for the college student. Do not output the user prompt. 
+                        Include relevent nutrition info such as calories, protein, fat, and carbs. 
+                        Label the days as the days of the week. Output must include all days, all meals, names of meals, and stats of meals. """
     full_prompt = f"{system_prompt}\n\n{user_prompt}"
 
     # Prepare the payload for Ollama

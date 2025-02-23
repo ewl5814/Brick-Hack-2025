@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 
@@ -41,19 +41,70 @@ export default function MealPlanPage() {
   };
 
   return (
-    <div>
+    <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
       <h1>Meal Plan Generator</h1>
-      <button onClick={handleGenerate} disabled={isLoading}>
-        {isLoading ? 'Generating...' : 'Generate Meal Plan'}
+      <button
+        onClick={handleGenerate}
+        disabled={isLoading}
+        style={{
+          padding: '10px 20px',
+          fontSize: '16px',
+          backgroundColor: '#007bff',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+        }}
+      >
+        Generate Meal Plan
       </button>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {mealPlan && (
-        <div>
+        <div style={{ marginTop: '20px' }}>
           <h2>Your Meal Plan:</h2>
           <p>{mealPlan}</p>
         </div>
       )}
+
+      {/* Full-screen loading overlay */}
+      {isLoading && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent gray overlay
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1000, // Ensure it's on top of everything
+          }}
+        >
+          <div className="spinner" style={{ width: '50px', height: '50px' }}></div>
+        </div>
+      )}
+
+      {/* Add CSS for the spinner */}
+      <style jsx>{`
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+        .spinner {
+          border: 4px solid #f3f3f3;
+          border-top: 4px solid #3498db;
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          animation: spin 1s linear infinite;
+        }
+      `}</style>
     </div>
   );
-  
 }
