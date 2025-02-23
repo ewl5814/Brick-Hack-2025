@@ -80,7 +80,7 @@ export default function MealPlanPage() {
       return; // Stop if the form is not valid
     }
   
-    const userPrompt = `Create a healthy meal plan for a vegetarian student with the following preferences:
+    const userPrompt = `Create a healthy meal plan for a student with the following preferences:
       Locations: ${selectedLocations.join(', ')}
       Meals: ${selectedMeals.join(', ')}
       Allergens to avoid: ${selectedAllergens.join(', ')}`;
@@ -142,7 +142,7 @@ export default function MealPlanPage() {
       {mealPlan && (
         <div style={{ marginTop: '20px' }}>
           <h2>Your Meal Plan:</h2>
-          <p>{mealPlan}</p>
+          <pre>{JSON.stringify(mealPlan, null, 2)}</pre>
         </div>
       )}
 
