@@ -6,8 +6,11 @@ COPY ./ .
 COPY . .
 RUN npm run build
 
-RUN npm start
+EXPOSE 3000
 
+USER node
+
+CMD [ "npm start" ]
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 
