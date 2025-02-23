@@ -6,15 +6,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { getAllergens } from "./hardcode/allergens";
+import { getMeals } from "./hardcode/meals";
 
-export default function AllergensSelect() {
-    const [selectedAllergens, setSelectedAllergens] = useState<string[]>([]);
-    const allergens = getAllergens();
+export default function MealsSelect() {
+    const [selectedMeals, setSelectedMeals] = useState<string[]>([]);
+    const meals = getMeals();
 
-    // Handle selecting and unselecting allergens
+    // Handle selecting and unselecting meals
     const handleSelectionChange = (value: string) => {
-        setSelectedAllergens((prevSelected) => {
+        setSelectedMeals((prevSelected) => {
             if (prevSelected.includes(value)) {
                 // If the location is already selected, remove it from the array
                 return prevSelected.filter((item) => item !== value);
@@ -28,23 +28,23 @@ export default function AllergensSelect() {
     return (
         <div className="text-center">
             <Select
-                // Don't bind selectedAllergens as a string for the value, since it is an array
+                // Don't bind selectedMeals as a string for the value, since it is an array
                 onValueChange={(value) => handleSelectionChange(value)}
             >
                 <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Allergens">
-                        {selectedAllergens.length > 0
-                            ? selectedAllergens.join(", ")
-                            : "Allergens"}
+                    <SelectValue placeholder="Meals">
+                        {selectedMeals.length > 0
+                            ? selectedMeals.join(", ")
+                            : "Meals"}
                     </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                    {allergens.map((name, index) => (
+                    {meals.map((name, index) => (
                         <SelectItem key={index} value={name}>
                             <label className="flex items-center">
                                 <input
                                     type="checkbox"
-                                    checked={selectedAllergens.includes(name)}
+                                    checked={selectedMeals.includes(name)}
                                     onChange={() => handleSelectionChange(name)}  // Toggle selection
                                 />
                                 <span className="ml-2">{name}</span>

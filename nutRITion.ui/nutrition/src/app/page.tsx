@@ -3,6 +3,9 @@ import Nav from "./navbar";
 import CreateMealView from "./create-meal"
 import Image from "next/image";
 import { useState } from 'react';
+import LocationsSelect from "./location-select";
+import MealsSelect from "./meal-select";
+import AllergensSelect from "./allergen-select";
 
 interface MealPlanResponse {
   meal_plan: string;
@@ -53,7 +56,11 @@ export default function MealPlanPage() {
                 width={1920}
                 height={300}
             />
-            <CreateMealView />
+            <div className="text-center flex flex-col items-center m-2">
+              <LocationsSelect />
+              <MealsSelect />
+              <AllergensSelect />
+            </div>
         </div>
       <h1>Meal Plan Generator</h1>
       <button
