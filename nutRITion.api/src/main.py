@@ -73,7 +73,7 @@ def generate_meal_plan():
 
     # Define system prompt
     system_prompt = """You are a nutritionist helping a college student create a healthy meal plan from food available on campus. 
-                       Create ALL output in JSON format. Create a 7-day meal plan for the college student. Do not output the user prompt. 
+                       Create ALL output in JSON format. Create a meal plan for the college student. Do not output the user prompt. 
                        Include relevant nutrition info such as location, calories, protein, fat, and carbs. Output this information as only numbers. 
                        Do not output anything besides JSON. RESPOND QUICKLY. 
                        Label the days as the days of the week. Output must include all days, all meals, names of meals, and stats of meals."""
