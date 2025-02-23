@@ -3,7 +3,7 @@ import csv
 
 from psycopg2._psycopg import AsIs
 
-from src.nutRITion_db_utils import *
+from nutRITion_db_utils import *
 
 
 def create_tables():
@@ -53,6 +53,8 @@ def create_tables():
             ('Soy'),
             ('Treenut'),
             ('Wheat');
+            
+    ALTER TABLE meals ADD CONSTRAINT unique_name_location UNIQUE (name, location);
     """)
 
 def get_next_id(table):

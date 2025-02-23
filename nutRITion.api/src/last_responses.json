@@ -1,0 +1,128 @@
+{
+    "Friday": {
+      "Breakfast": {
+        "calories": 400,
+        "carbs": 60,
+        "fat": 20,
+        "location": "Artesano Bakery & Cafe",
+        "name": "Cinnamon Roll",
+        "protein": 5
+      },
+      "Dinner": {
+        "calories": 550,
+        "carbs": 60,
+        "fat": 25,
+        "location": "Café at the Crossroads",
+        "name": "Chicken Quesadilla",
+        "protein": 25
+      }
+    },
+    "Monday": {
+      "Breakfast": {
+        "calories": 420,
+        "carbs": 40,
+        "fat": 24,
+        "location": "Artesano Bakery & Cafe",
+        "name": "Avocado Toast",
+        "protein": 10
+      },
+      "Dinner": {
+        "calories": 550,
+        "carbs": 60,
+        "fat": 20,
+        "location": "Café at the Crossroads",
+        "name": "Grilled Chicken Wrap",
+        "protein": 35
+      }
+    },
+    "Saturday": {
+      "Breakfast": {
+        "calories": 450,
+        "carbs": 50,
+        "fat": 20,
+        "location": "Artesano Bakery & Cafe",
+        "name": "Breakfast Burrito",
+        "protein": 20
+      },
+      "Dinner": {
+        "calories": 500,
+        "carbs": 50,
+        "fat": 20,
+        "location": "Café at the Crossroads",
+        "name": "Grilled Chicken Sandwich",
+        "protein": 30
+      }
+    },
+    "Sunday": {
+      "Breakfast": {
+        "calories": 350,
+        "carbs": 50,
+        "fat": 15,
+        "location": "Artesano Bakery & Cafe",
+        "name": "French Toast",
+        "protein": 10
+      },
+      "Dinner": {
+        "calories": 600,
+        "carbs": 60,
+        "fat": 25,
+        "location": "Café at the Crossroads",
+        "name": "Chicken Fettuccine",
+        "protein": 30
+      }
+    },
+    "Thursday": {
+      "Breakfast": {
+        "calories": 350,
+        "carbs": 40,
+        "fat": 15,
+        "location": "Artesano Bakery & Cafe",
+        "name": "Bagel with Scrambled Eggs",
+        "protein": 15
+      },
+      "Dinner": {
+        "calories": 400,
+        "carbs": 10,
+        "fat": 10,
+        "location": "Café at the Crossroads",
+        "name": "Grilled Chicken Breast",
+        "protein": 35
+      }
+    },
+    "Tuesday": {
+      "Breakfast": {
+        "calories": 300,
+        "carbs": 40,
+        "fat": 10,
+        "location": "Artesano Bakery & Cafe",
+        "name": "Yogurt Parfait",
+        "protein": 15
+      },
+      "Dinner": {
+        "calories": 500,
+        "carbs": 60,
+        "fat": 20,
+        "location": "Café at the Crossroads",
+        "name": "Veggie Burger",
+        "protein": 20
+      }
+    },
+    "Wednesday": {
+      "Breakfast": {
+        "calories": 250,
+        "carbs": 10,
+        "fat": 15,
+        "location": "Artesano Bakery & Cafe",
+        "name": "Omelette",
+        "protein": 20
+      },
+      "Dinner": {
+        "calories": 600,
+        "carbs": 60,
+        "fat": 25,
+        "location": "Café at the Crossroads",
+        "name": "Chicken Fajitas",
+        "protein": 30
+      }
+    }
+}
