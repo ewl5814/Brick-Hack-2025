@@ -26,8 +26,6 @@ COPY --from=builder  /app/.next/static ./.next/static
 
 #USER nextjs
 
-FROM base as release
-
 EXPOSE 3000
 
 ENV PORT=3000
