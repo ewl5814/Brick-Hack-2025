@@ -31,7 +31,7 @@ export default function LocationsSelect() {
                 // Don't bind selectedLocations as a string for the value, since it is an array
                 onValueChange={(value) => handleSelectionChange(value)}
             >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-auto min-w-[180px]">
                     <SelectValue placeholder="Locations">
                         {selectedLocations.length > 0
                             ? selectedLocations.join(", ")
