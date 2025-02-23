@@ -5,8 +5,6 @@ from openai import OpenAI
 import os
 import json
 
-import nutRITion
-
 # Load environment variables
 load_dotenv()
 
@@ -67,12 +65,8 @@ def write_response_to_file(new_response):
 @app.route('/generate-meal-plan', methods=['POST'])
 def generate_meal_plan():
     # Get user prompt from request
+    data = request.json
     user_prompt = data.get('prompt')
-    locations = data.get('locations')
-    meal_times = data.get('mealTimes')
-    allergens = data.get('allergens')
-
-    data = nutRITion.query(locations, meal_times, allergens)
 
     if not user_prompt:
         return jsonify({"error": "Prompt is required"}), 400
@@ -82,8 +76,7 @@ def generate_meal_plan():
                        Create ALL output in JSON format. Create a meal plan for the college student. Do not output the user prompt. 
                        Include relevant nutrition info such as location, calories, protein, fat, and carbs. Output this information as only numbers. 
                        Do not output anything besides JSON. RESPOND QUICKLY. 
-                       Label the days as the days of the week. Output must include all days, all meals, names of meals, and stats of meals. 
-                       ONLY USE THE FOLLOWING AVAILABLE FOODS:\n{data}"""
+                       Label the days as the days of the week. Output must include all days, all meals, names of meals, and stats of meals."""
 
     max_retries = 3  # Maximum number of retries
     retry_count = 0
@@ -126,4 +119,4 @@ def generate_meal_plan():
 
 # Run the Flask app
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5432)
+    app.run(host='0.0.0.0', port=8000)
