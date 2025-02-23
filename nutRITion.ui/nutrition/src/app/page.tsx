@@ -1,5 +1,6 @@
-'use client';
-
+import Nav from "./navbar";
+import CreateMealView from "./create-meal"
+import Image from "next/image";
 import { useState } from 'react';
 
 interface MealPlanResponse {
@@ -42,6 +43,17 @@ export default function MealPlanPage() {
 
   return (
     <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
+      <div className="flex flex-col items-center">
+            <Nav />
+            <Image
+                src="/home.png"
+                alt="Some buritos"
+                sizes="(max-width: 1920) 100vw, 33vw"
+                width={1920}
+                height={300}
+            />
+            <CreateMealView />
+        </div>
       <h1>Meal Plan Generator</h1>
       <button
         onClick={handleGenerate}
