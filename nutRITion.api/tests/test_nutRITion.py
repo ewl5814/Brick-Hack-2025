@@ -4,8 +4,13 @@ import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+
+import sys
+import os
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+
 from src.nutRITion import *
-from src.nutRITion_db_utils import *
 
 
 class TestNutRITion(unittest.TestCase):
@@ -22,6 +27,7 @@ class TestNutRITion(unittest.TestCase):
         load_data('/Users/paper/Brick-Hack-2025/nutRITion.api/src/data.csv')
         get_meals()
         get_foodandallergens()
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -3,7 +3,7 @@ import csv
 
 from psycopg2._psycopg import AsIs
 
-from src.nutRITion_db_utils import *
+from nutRITion_db_utils import *
 
 
 def create_tables():
@@ -53,6 +53,8 @@ def create_tables():
             ('Soy'),
             ('Treenut'),
             ('Wheat');
+            
+    ALTER TABLE meals ADD CONSTRAINT unique_name_location UNIQUE (name, location);
     """)
 
 def get_next_id(table):
@@ -157,4 +159,17 @@ def delete_meal(id):
     DELETE FROM meals WHERE mealID = %(id)s;
     """, {'id': id})
 
-
+def query(location, meal_time, allergens):
+    return exec_get_all(
+    """
+    SELECT *
+    FROM meals m
+    WHERE m.location = ANY(%s)
+    AND m.mealTime = ANY(%s)
+    AND NOT EXISTS (
+        SELECT 1 FROM foodandallergens fa
+        WHERE fa.mealID = m.mealID
+        AND fa.allergenName = ANY(%s)
+    )
+    """, (location, meal_time, allergens)
+    )
