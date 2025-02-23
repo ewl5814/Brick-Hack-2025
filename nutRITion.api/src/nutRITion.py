@@ -3,7 +3,7 @@ import csv
 
 from psycopg2._psycopg import AsIs
 
-from src.nutRITion_db_utils import *
+from nutRITion_db_utils import *
 
 
 def create_tables():
@@ -18,6 +18,7 @@ def create_tables():
     CREATE TABLE meals(
         mealID SERIAL PRIMARY KEY NOT NULL,
         name VARCHAR(50),
+        location VARCHAR(50),
         calories FLOAT,
         satFat FLOAT,
         cholesterol FLOAT,
@@ -85,7 +86,7 @@ def load_data(path):
             rows.append(next(csvreader))
             count += 1
     for row in rows:
-        mealDict = {'name': row[0], 'allergens': row[3], 'calories': row[10], 'satFat': row[8], 'cholesterol': row[13],
+        mealDict = {'name': row[0], 'location': row[1], 'allergens': row[3], 'calories': row[10], 'satFat': row[8], 'cholesterol': row[13],
                     'sugars': row[17], 'fat': row[6], 'sodium': row[15], 'fiber': row[5], 'protein': row[7]}
         count = len(mealDict.get('allergens').split('/'))
         mealDict.update({'count': count})
@@ -93,9 +94,9 @@ def load_data(path):
 
 
     sql = """
-    INSERT INTO meals(mealId, name, calories, satFat, cholesterol, sugars, fat, sodium, fiber, protein)
+    INSERT INTO meals(mealId, location, name, calories, satFat, cholesterol, sugars, fat, sodium, fiber, protein)
     VALUES 
-    ((SELECT COUNT(*) FROM meals)+1, %(name)s, %(calories)s, %(satFat)s, %(cholesterol)s, %(sugars)s, %(fat)s, %(sodium)s, %(fiber)s, %(protein)s);
+    ((SELECT COUNT(*) FROM meals)+1, %(location)s, %(name)s, %(calories)s, %(satFat)s, %(cholesterol)s, %(sugars)s, %(fat)s, %(sodium)s, %(fiber)s, %(protein)s);
     
     DO $$
     DECLARE
