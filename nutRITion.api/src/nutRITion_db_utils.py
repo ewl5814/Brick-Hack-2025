@@ -65,3 +65,15 @@ def exec_commit(sql, args={}):
     conn.commit()
     conn.close()
     return result
+
+
+def exec_list(sql, datalist={}):
+    conn = connect()
+    cur = conn.cursor()
+    result_list = []
+    for data_item in datalist:
+        cur.execute(sql, data_item)
+    conn.commit()
+    conn.close()
+
+    return result_list
