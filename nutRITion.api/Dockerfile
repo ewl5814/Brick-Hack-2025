@@ -1,7 +1,7 @@
 FROM public.ecr.aws/ubuntu/ubuntu:20.04
 
 RUN apt-get update
-RUN apt-get install python3 python3-pip postgresql -y
+RUN apt-get install python3 python3-pip libpq-dev gcc -y
 RUN pip3 install --upgrade pip
 WORKDIR /app
 
