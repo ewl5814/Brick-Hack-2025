@@ -52,6 +52,8 @@ def create_tables():
             ('Soy'),
             ('Treenut'),
             ('Wheat');
+            
+    ALTER TABLE meals ADD CONSTRAINT unique_name_location UNIQUE (name, location);
     """)
 
 def get_next_id(table):
@@ -96,8 +98,8 @@ def load_data(path):
     sql = """
     INSERT INTO meals(mealId, location, name, calories, satFat, cholesterol, sugars, fat, sodium, fiber, protein)
     VALUES 
-    ((SELECT COUNT(*) FROM meals)+1, %(location)s, %(name)s, %(calories)s, %(satFat)s, %(cholesterol)s, %(sugars)s, %(fat)s, %(sodium)s, %(fiber)s, %(protein)s);
-    
+    ((SELECT COUNT(*) FROM meals)+1, %(location)s, %(name)s, %(calories)s, %(satFat)s, %(cholesterol)s, %(sugars)s, %(fat)s, %(sodium)s, %(fiber)s, %(protein)s)
+    ON CONFLICT (location, name) DO NOTHING;
     DO $$
     DECLARE
         i INT := 0;
