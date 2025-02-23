@@ -9,19 +9,6 @@ import { getLocations } from "./http-handlers/location"
 
 export default function LocationSelect() {
     const locations = getLocations();
-    console.log("Locations: " + locations)
-
-    if(locations == null || locations.length < 1) {
-        return (
-            <div className="text-center">
-                <Select disabled={true} >
-                    <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Locations" />
-                    </SelectTrigger>
-                </Select>
-            </div>
-        )
-    }
 
     return (
         <div className="text-center">
