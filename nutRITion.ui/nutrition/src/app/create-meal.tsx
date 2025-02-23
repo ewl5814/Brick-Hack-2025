@@ -1,3 +1,4 @@
+import AllergensSelect from "./allergen-select";
 import LocationSelect from "./location-select";
 import {
     Select,
@@ -22,6 +23,7 @@ export default function CreateMealView() {
                     <SelectItem value="dinner">Dinner</SelectItem>
                 </SelectContent>
             </Select>
+            <AllergensSelect />
         </div>
     )
 }

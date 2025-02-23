@@ -5,20 +5,20 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { getLocations } from "./hardcode/location"
+import { getAllergens } from "./hardcode/allergens"
 
-export default function LocationSelect() {
-    const locations = getLocations();
+export default function AllergensSelect() {
+    const allergens = getAllergens();
 
     return (
         <div className="text-center">
             <Select>
                 <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Locations" />
+                    <SelectValue placeholder="Allergens" />
                 </SelectTrigger>
                 <SelectContent>
                     {
-                        locations.map((name, index) => {
+                        allergens.map((name, index) => {
                             return(
                                 <SelectItem value={name} key={index}>{name}</SelectItem>
                             )
