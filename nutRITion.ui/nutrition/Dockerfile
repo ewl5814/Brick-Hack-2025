@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/node:latest as base
+FROM node:latest as base
 FROM base AS deps
 
 COPY package*.json ./
@@ -8,7 +8,7 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-COPY .env.production.sample .env.production
+#COPY .env.production.sample .env.production
 RUN npm run build
 
 FROM base AS runner
