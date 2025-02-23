@@ -1,4 +1,4 @@
-FROM node:latest as base
+FROM public.ecr.aws/docker/library/node:latest as base
 FROM base AS deps
 
 COPY package*.json ./
