@@ -19,7 +19,7 @@ export default function WelcomePage() {
       <div className="absolute inset-0 flex items-center justify-center">
         <button
           onClick={() => router.push("/dashboard")}
-          className="bg-[#F76902] hover:bg-[#E08C2B] text-white font-bold py-4 px-8 text-xl rounded-xl shadow-lg transition duration-300"
+          className="bg-[#F76902] hover:bg-[#E08C2B] active:bg-[#F76902] text-white font-bold py-4 px-8 text-xl rounded-xl shadow-lg transition duration-300"
         >
           Get Started
         </button>

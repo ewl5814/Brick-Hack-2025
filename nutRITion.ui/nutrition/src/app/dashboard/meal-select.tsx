@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     Select,
     SelectContent,
@@ -8,27 +8,25 @@ import {
 } from "@/components/ui/select";
 import { getMeals } from ".././hardcode/meals";
 
-export default function MealsSelect() {
-    const [selectedMeals, setSelectedMeals] = useState<string[]>([]);
+interface MealsSelectProps {
+  selectedMeals: string[];
+  onSelectionChange: (selectedMeals: string[]) => void;
+}
+
+export default function MealsSelect({ selectedMeals, onSelectionChange }: Readonly<MealsSelectProps>) {
     const meals = getMeals();
 
     // Handle selecting and unselecting meals
     const handleSelectionChange = (value: string) => {
-        setSelectedMeals((prevSelected) => {
-            if (prevSelected.includes(value)) {
-                // If the location is already selected, remove it from the array
-                return prevSelected.filter((item) => item !== value);
-            } else {
-                // Otherwise, add it to the array
-                return [...prevSelected, value];
-            }
-        });
+        const updatedMeals = selectedMeals.includes(value)
+            ? selectedMeals.filter((item) => item !== value) // Remove if already selected
+            : [...selectedMeals, value]; // Add if not selected
+        onSelectionChange(updatedMeals);
     };
 
     return (
         <div className="text-center">
             <Select
-                // Don't bind selectedMeals as a string for the value, since it is an array
                 onValueChange={(value) => handleSelectionChange(value)}
             >
                 <SelectTrigger className="w-auto min-w-[180px]">

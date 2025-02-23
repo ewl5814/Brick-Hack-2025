@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     Select,
     SelectContent,
@@ -8,27 +8,25 @@ import {
 } from "@/components/ui/select";
 import { getAllergens } from ".././hardcode/allergens";
 
-export default function AllergensSelect() {
-    const [selectedAllergens, setSelectedAllergens] = useState<string[]>([]);
+interface AllergensSelectProps {
+  selectedAllergens: string[];
+  onSelectionChange: (selectedAllergens: string[]) => void;
+}
+
+export default function AllergensSelect({ selectedAllergens, onSelectionChange }: Readonly<AllergensSelectProps>) {
     const allergens = getAllergens();
 
     // Handle selecting and unselecting allergens
     const handleSelectionChange = (value: string) => {
-        setSelectedAllergens((prevSelected) => {
-            if (prevSelected.includes(value)) {
-                // If the location is already selected, remove it from the array
-                return prevSelected.filter((item) => item !== value);
-            } else {
-                // Otherwise, add it to the array
-                return [...prevSelected, value];
-            }
-        });
+        const updatedAllergens = selectedAllergens.includes(value)
+            ? selectedAllergens.filter((item) => item !== value) // Remove if already selected
+            : [...selectedAllergens, value]; // Add if not selected
+        onSelectionChange(updatedAllergens);
     };
 
     return (
         <div className="text-center">
             <Select
-                // Don't bind selectedAllergens as a string for the value, since it is an array
                 onValueChange={(value) => handleSelectionChange(value)}
             >
                 <SelectTrigger className="w-auto min-w-[180px]">
