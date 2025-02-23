@@ -7,11 +7,16 @@ class TestNutRITion(unittest.TestCase):
     def test_build_tables(self):
         create_tables()
         result = get_meals()
-        self.assertEqual([], result, "no rows in meals")
+        self.assertEqual(None, result, "no rows in meals")
 
         result = get_foodandallergens()
-        self.assertEqual([], result, "no rows in foodandallergens")
+        self.assertEqual(None, result, "no rows in foodandallergens")
 
+    def test_csv(self):
+        create_tables()
+        load_data('/Users/paper/Brick-Hack-2025/nutRITion.api/src/data.csv')
+        get_meals()
+        get_foodandallergens()
 
 if __name__ == "__main__":
     unittest.main()

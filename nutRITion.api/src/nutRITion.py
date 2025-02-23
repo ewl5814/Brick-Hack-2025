@@ -29,30 +29,28 @@ def create_tables():
     );
     
     CREATE TABLE allergens(
-        allergenID SERIAL PRIMARY KEY NOT NULL,
-        name VARCHAR(50)
+        name VARCHAR(50) PRIMARY KEY NOT NULL
     );
     
     CREATE TABLE foodandallergens (
         foodandallergenID SERIAL PRIMARY KEY NOT NULL,
-        allergenID INT,
+        allergenName VARCHAR(50),
         mealID INT,
-        FOREIGN KEY (allergenID) REFERENCES allergens(allergenID),
         FOREIGN KEY (mealID) REFERENCES meals(mealID)
     );
     
-    INSERT INTO allergens(allergenID, name)
-    VALUES  (1, 'Coconut'),
-            (2, 'Egg'),
-            (3, 'Fish'),
-            (4, 'Gluten'),
-            (5, 'Milk'),
-            (6, 'Peanut'),
-            (7, 'Sesame'),
-            (8, 'Shellfish'),
-            (9, 'Soy'),
-            (10, 'Treenut'),
-            (11, 'Wheat');
+    INSERT INTO allergens(name)
+    VALUES  ('Coconut'),
+            ('Egg'),
+            ('Fish'),
+            ('Gluten'),
+            ('Milk'),
+            ('Peanut'),
+            ('Sesame'),
+            ('Shellfish'),
+            ('Soy'),
+            ('Treenut'),
+            ('Wheat');
     """)
 
 def get_next_id(table):
@@ -73,33 +71,88 @@ def get_foodandallergens():
     """)
 
 def load_data(path):
-    """ Takes in a path to a csv file and then opens that file, filling a 2D array with every of the rows and attributes
-        and creating a driver or a rider with every element in the array. """
+    """
+    name 0,location 1,period 2,allergens 3,carbohydrates 4,dietaryFiber 5,fat 6,protein 7,saturatedFat 8,vitaminA 9,calories 10,transFattyAcid 11,calcium 12,cholesterol 13,iron 14,sodium 15,vitaminC 16,totalSugars 17
+    """
     rows = []
+    data = []
+    count = 0
     with open(path, 'r') as csvfile:
         csvreader = csv.reader(csvfile)
-        for row in csvreader:
-            rows.append(row)
+        next(csvreader)
+        count = 0
+        while count < 1000:
+            rows.append(next(csvreader))
+            count += 1
     for row in rows:
-        mealDict = {'name': None, 'calories': None, 'satFat': None, 'cholesterol': None,
-                    'sugars': None, 'fat': None, 'sodium': None, 'fiber': None, 'protein': None}
+        mealDict = {'name': row[0], 'allergens': row[3], 'calories': row[10], 'satFat': row[8], 'cholesterol': row[13],
+                    'sugars': row[17], 'fat': row[6], 'sodium': row[15], 'fiber': row[5], 'protein': row[7]}
+        count = len(mealDict.get('allergens').split('/'))
+        mealDict.update({'count': count})
+        data.append(mealDict)
+
+
+    sql = """
+    INSERT INTO meals(mealId, name, calories, satFat, cholesterol, sugars, fat, sodium, fiber, protein)
+    VALUES 
+    ((SELECT COUNT(*) FROM meals)+1, %(name)s, %(calories)s, %(satFat)s, %(cholesterol)s, %(sugars)s, %(fat)s, %(sodium)s, %(fiber)s, %(protein)s);
+    
+    DO $$
+    DECLARE
+        i INT := 0;
+        aller VARCHAR(50);
+        foodandallergenID INT := (SELECT COUNT(*) FROM foodandallergens); 
+        count INT := %(count)s; 
+        mealID INT := (SELECT COUNT(*) FROM meals); 
+    BEGIN
+        WHILE i <= count LOOP
+            aller := SPLIT_PART(%(allergens)s, '/', i + 1);
+            INSERT INTO foodandallergens(foodandallergenID, allergenName, mealID)
+            VALUES (foodandallergenID + i, aller, mealID);
+            i := i + 1;
+        END LOOP;
+    END $$;
+    """
+    exec_list(sql, data)
 
 
 
 def new_meal(dict):
-    """
-    Takes in a dictionary of attributes to be injected into a sql statement for creating a ride entity. Also gets rid
-    of any etities in the available table that are involved with the new ride.
-    Returns the ride.
+    nextMID = get_next_id('meals')[0]
+    dict.update({'mealID': nextMID + 1})
+    nextAID = get_next_id('foodandallergens')[0]
+    dict.update({'foodandallergenID': nextAID + 1})
+    count = len(dict.get('allergens').split('/'))
+    dict.update({'count': count})
 
-    """
-    nextRID = get_next_id('meals')[0]
-    dict.update({'mealID': nextRID + 1})
-
-    return exec_get_one_commit(
+    return exec_commit(
         """    
     INSERT INTO meals(mealID, name, calories, satFat, cholesterol, sugars, fat, sodium, fiber, protein)
     VALUES 
     (%(mealID)s, %(name)s, %(calories)s, %(satFat)s, %(cholesterol)s, %(sugars)s, %(fat)s, %(sodium)s, %(fiber)s, %(protein)s);
+    
+    DO $$
+    DECLARE
+        i INT := 0;
+        aller VARCHAR(50);
+        foodandallergenID INT := %(foodandallergenID)s; 
+        count INT := %(count)s; 
+        mealID INT := %(mealID)s; 
+    BEGIN
+        WHILE i <= count LOOP
+            aller := SPLIT_PART(%(allergens)s, '/', i + 1);
+            INSERT INTO foodandallergens(foodandallergenID, allergenName, mealID)
+            VALUES (foodandallergenID + i, aller, mealID);
+            i := i + 1;
+        END LOOP;
+    END $$;
     """, dict)
+
+def delete_meal(id):
+    return exec_commit(
+        """    
+    DELETE FROM foodandallergens WHERE mealID = %(id)s;
+    DELETE FROM meals WHERE mealID = %(id)s;
+    """, {'id': id})
+
 

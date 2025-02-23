@@ -13,14 +13,3 @@ VALUES  (1, 2, 1),
         (8, 5, 2),
         (9, 9, 2),
         (10, 11, 2);
-
-            (1, 'Coconut'),
-            (2, 'Egg'),
-            (3, 'Fish'),
-            (4, 'Gluten'),
-            (5, 'Milk'),
-            (6, 'Peanut'),
-            (7, 'Sesame'),
-            (8, 'Shellfish'),
-            (9, 'Soy'),
-            (10, 'Treenut');
