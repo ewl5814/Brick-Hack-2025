@@ -1,0 +1,5 @@
+host: localhost
+database: nutRITion
+user: nutRITion
+password: hee
+port: 5432
